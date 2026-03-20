@@ -44,7 +44,8 @@ void enqueue(data d, queue *q)
 
 data head(const queue *q)
 {
-    _______________________ // <- Completa esta función
+ assert(!empty(q));  // Aseguramos que la cola no esté vacía
+    return q->head->d;  // Devolvemos el dato que está en la cabeza
 }
 
 boolean empty(const queue *q)
@@ -54,7 +55,7 @@ boolean empty(const queue *q)
 
 boolean full(const queue *q)
 {
-    _______________________ // <- Completa esta función
+   return FALSE; // Nunca estará llena porque usamos memoria dinámica
 }
 
 int main(void)
