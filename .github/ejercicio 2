@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// ==========================
+// ESTRUCTURAS
+// ==========================
+
+typedef struct {
+    char nombre[50];
+    char artista[50];
+} CANCION;
+
+typedef struct nodo {
+    CANCION c;
+    struct nodo *siguiente;
+    struct nodo *anterior;
+} NODO;
+
+typedef struct {
+    NODO *inicio;
+    NODO *fin;
+} PLAYLIST;
+
+// ==========================
+// FUNCIONES
+// ==========================
+
+// Inicializar playlist
+void inicializar(PLAYLIST *pl) {
+    pl->inicio = NULL;
+    pl->fin = NULL;
+}
+
+// Crear nodo
+NODO* crearNodo(char nombre[], char artista[]) {
+    NODO nuevo = (NODO) malloc(sizeof(NODO));
+
+    strcpy(nuevo->c.nombre, nombre);
+    strcpy(nuevo->c.artista, artista);
+
+    nuevo->siguiente = NULL;
+    nuevo->anterior = NULL;
+
+    return nuevo;
+}
+
+// Insertar al inicio
+void insertarInicio(PLAYLIST *pl, char nombre[], char artista[]) {
+
+    NODO *nuevo = crearNodo(nombre, artista);
+
+    if (pl->inicio == NULL) {
+        pl->inicio = pl->fin = nuevo;
+    } else {
+        nuevo->siguiente = pl->inicio;
+        pl->inicio->anterior = nuevo;
+        pl->inicio = nuevo;
+    }
+}
+
+// Insertar al final
+void insertarFinal(PLAYLIST *pl, char nombre[], char artista[]) {
+
+    NODO *nuevo = crearNodo(nombre, artista);
+
+    if (pl->fin == NULL) {
+        pl->inicio = pl->fin = nuevo;
+    } else {
+        pl->fin->siguiente = nuevo;
+        nuevo->anterior = pl->fin;
+        pl->fin = nuevo;
+    }
+}
+
+// Imprimir playlist
+void imprimirPlaylist(PLAYLIST *pl) {
+
+    NODO *aux = pl->inicio;
+
+    printf("\n--- PLAYLIST ---\n");
+
+    while (aux != NULL) {
+        printf("Cancion: %s - %s\n", aux->c.nombre, aux->c.artista);
+        aux = aux->siguiente;
+    }
+}
+
+// ==========================
+// MAIN (PRUEBA)
+// ==========================
+
+int main() {
+
+    PLAYLIST pl;
+
+    inicializar(&pl);
+
+    insertarFinal(&pl, "Blinding Lights", "The Weeknd");
+    insertarFinal(&pl, "Shape of You", "Ed Sheeran");
+    insertarInicio(&pl, "Bohemian Rhapsody", "Queen");
+
+    imprimirPlaylist(&pl);
+
+    return 0;
+}
