@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define EMPTY 0
-#define FULL 6   // 👈 límite de 6 órdenes
+#define FULL 6   //
 
 typedef unsigned int data;
 typedef enum {FALSO, VERDADERO} boolean;
@@ -40,7 +40,7 @@ boolean full(const queue *q) {
 
 void enqueue(data d, queue *q) {
     if (full(q)) {
-        printf("❌ La cola esta llena (max 6 comandas)\n");
+        printf(" La cola esta llena (max 6 comandas)\n");
         return;
     }
 
@@ -60,7 +60,7 @@ void enqueue(data d, queue *q) {
 
 data deque(queue *q) {
     if (empty(q)) {
-        printf("❌ No hay comandas\n");
+        printf(" No hay comandas\n");
         return 0;
     }
 
